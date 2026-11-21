@@ -1,0 +1,14 @@
+لتحديث البيانات في ال جيت 
+git add .
+git commit -m "update backend changes"
+git push origin main
+git push origin master
+
+
+اذا ما ظبط 
+git pull origin main --rebase
+git push origin main
+
+git add .
+git rebase --continue
+git push origin main
