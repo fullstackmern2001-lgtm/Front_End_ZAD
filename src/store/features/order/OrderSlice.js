@@ -58,7 +58,7 @@ const orderSlice = createSlice({
         state.isUpdating = false;
         state.error = action.payload;
       })
-      // ===== STRIPE CHECKOUT =====
+      // ===== CHECKOUT GATEWAYS =====
       .addCase(checkoutSessionThunk.pending, (state) => {
         state.isLoading = true;
         state.error = null;

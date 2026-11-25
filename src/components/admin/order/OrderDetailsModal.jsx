@@ -1,5 +1,7 @@
 import Modal from "../Modal";
 import React from "react";
+import { getPaymentMethodLabel } from "../../../utils/paymentMethodLabel";
+
 const OrderDetailsModal = ({ order, onClose }) => {
   const fullName = order?.user?.firstName + " " + order?.user?.lastName;
 
@@ -33,9 +35,7 @@ const OrderDetailsModal = ({ order, onClose }) => {
 
           <p>
             <b>طريقة الدفع:</b>{" "}
-            {order.paymentMethodType === "card"
-              ? "💳 بطاقة"
-              : "طلب قديم غير موثق"}
+            {getPaymentMethodLabel(order.paymentMethodType)}
           </p>
 
           <p>

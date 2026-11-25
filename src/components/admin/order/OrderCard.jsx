@@ -1,4 +1,6 @@
 import React from "react";
+import { getPaymentMethodLabel } from "../../../utils/paymentMethodLabel";
+
 const OrderCard = ({ order, onEdit, onDetails }) => {
   const fullName = order?.user?.firstName + " " + order?.user?.lastName;
 
@@ -17,6 +19,13 @@ const OrderCard = ({ order, onEdit, onDetails }) => {
         <p className="text-sm">
           السعر الكلي:
           <span className="!font-bold !ml-1">${order.totalOrderPrice}</span>
+        </p>
+
+        <p className="text-sm">
+          طريقة الدفع:
+          <span className="!ml-2 !font-bold text-gray-800">
+            {getPaymentMethodLabel(order.paymentMethodType)}
+          </span>
         </p>
 
         <p className="text-sm">

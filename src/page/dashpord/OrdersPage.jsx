@@ -16,11 +16,41 @@ const OrdersPage = () => {
     error,
     reload,
     handleSearchChange,
+    checkoutStatus,
+    retryCheckoutCheck,
   } = useUserOrdersPage();
+
+  const checkoutMessages = {
+    checking: "جارٍ التحقق من نتيجة الدفع...",
+    paid: "تم تأكيد الدفع بنجاح، وتم تحديث قائمة الطلبات.",
+    pending:
+      "الدفع قيد التأكيد لدى بوابة الدفع. لا تعتبر العملية مكتملة حتى يظهر الطلب مدفوعًا.",
+    failed: "لم يتم تأكيد الدفع. يمكنك المحاولة مجددًا من سلة الخدمات.",
+    expired: "انتهت صلاحية جلسة الدفع. ابدأ محاولة دفع جديدة من السلة.",
+    error: "تعذر التحقق من حالة الدفع. أعد المحاولة بعد قليل.",
+  };
+  const showCheckoutRetry = ["pending", "error"].includes(checkoutStatus);
 
   if (isLoading) {
     return (
       <>
+        {checkoutStatus && (
+          <div
+            className="mb-4 rounded-xl bg-blue-50 p-4 text-center text-blue-800"
+            role="status"
+          >
+            <p>{checkoutMessages[checkoutStatus]}</p>
+            {showCheckoutRetry && (
+              <button
+                type="button"
+                onClick={retryCheckoutCheck}
+                className="mt-2 rounded-lg border border-blue-300 px-4 py-2"
+              >
+                تحقق مجددًا
+              </button>
+            )}
+          </div>
+        )}
         <p className="mb-4 flex items-center justify-center gap-2 text-green-800" role="status">
           <LoaderCircle className="h-5 w-5 animate-spin" aria-hidden="true" />
           جاري تحميل الطلبات...
@@ -34,6 +64,29 @@ const OrdersPage = () => {
 
   return (
     <div className="!p-4 md:!p-6 !space-y-4">
+      {checkoutStatus && (
+        <div
+          className={`rounded-xl p-4 text-center ${
+            checkoutStatus === "paid"
+              ? "bg-green-50 text-green-800"
+              : ["failed", "expired", "error"].includes(checkoutStatus)
+                ? "bg-red-50 text-red-800"
+                : "bg-blue-50 text-blue-800"
+          }`}
+          role={["failed", "expired", "error"].includes(checkoutStatus) ? "alert" : "status"}
+        >
+          <p>{checkoutMessages[checkoutStatus]}</p>
+          {showCheckoutRetry && (
+            <button
+              type="button"
+              onClick={retryCheckoutCheck}
+              className="mt-2 rounded-lg border border-current px-4 py-2"
+            >
+              تحقق مجددًا
+            </button>
+          )}
+        </div>
+      )}
       <input
         type="text"
         placeholder="ابحث برقم الطلب"

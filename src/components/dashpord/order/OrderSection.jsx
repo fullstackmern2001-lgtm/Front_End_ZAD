@@ -1,5 +1,6 @@
 import React from "react";
 import OrderCard from "./OrderCard";
+import { getPaymentMethodLabel } from "../../../utils/paymentMethodLabel";
 
 const OrderSection = ({ order }) => {
   return (
@@ -15,18 +16,22 @@ const OrderSection = ({ order }) => {
           </p>
         </div>
 
-        <div className="flex gap-3 text-sm">
+        <div className="flex gap-2 flex-wrap items-center text-sm">
+          <span className="!px-3 !py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium">
+            {getPaymentMethodLabel(order.paymentMethodType)}
+          </span>
+
           <span
-            className={`!px-3 py-1 rounded-full ${
+            className={`!px-3 !py-1 rounded-full font-medium ${
               order.isPaid
-                ? "bg-green-100 text-gray-700"
+                ? "bg-green-100 text-green-800"
                 : "bg-red-100 text-red-600"
             }`}
           >
             {order.isPaid ? "مدفوع" : "غير مدفوع"}
           </span>
 
-          <span className="!px-3 !py-1 rounded-full bg-green-100 text-gray-700">
+          <span className="!px-3 !py-1 rounded-full bg-gray-100 text-gray-700 font-medium">
             {order.isDelivered ? "تم تنفيذ الخدمة" : "قيد التنفيذ"}
           </span>
         </div>
