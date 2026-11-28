@@ -2,7 +2,7 @@ import axios from "axios";
 const apiBase =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.PROD
-    ? "https://shopping-cart-back-end-1.onrender.com/api/v1"
+    ? "https://my-mern-backend-wn2l.onrender.com/api/v1"
     : "http://localhost:8000/api/v1");
 const api = axios.create({
   baseURL: apiBase,
